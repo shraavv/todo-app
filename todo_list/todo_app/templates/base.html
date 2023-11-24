@@ -2,13 +2,17 @@
 <!-- Base template -->
 <!doctype html>
 <html lang="en">
+<div class='header-bar'>
+    <div>
+        <h1> Hello {{request.user|title}}!</h1>
+    </div>
+    {% if request.user.is_authenticated%}
 
-{% if request.user.is_authenticated%}
-<p>{{request.user}}</p>
-<a href="{% url 'logout' %}"> LOGOUT</a>
-{% else %}
-<a href="{% url 'login' %}"> LOGIN</a>
-{% endif %}
+    <a href="{% url 'logout' %}"> LOGOUT</a>
+    {% else %}
+    <a href="{% url 'login' %}"> LOGIN</a>
+    {% endif %}
+</div>
 
 <hr>
 
@@ -18,13 +22,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--Simple.css-->
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
-    <title>Django To-do Lists</title>
+    <title>To-do Lists</title>
 </head>
 
 <body>
     <div>
         <h1 onclick="location.href='{% url "index" %}'">
-            Django To-do Lists
+            To-do Lists
         </h1>
     </div>
     <div>

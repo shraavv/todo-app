@@ -3,7 +3,7 @@ from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.contrib.auth import login
 from django.views.generic import (
     ListView,
@@ -111,9 +111,11 @@ class ItemUpdate(LoginRequiredMixin,UpdateView):
     
 class ListDelete(LoginRequiredMixin,DeleteView):
     model = ToDoList
-    # You have to use reverse_lazy() instead of reverse(),
-    # as the urls are not loaded when the file is imported.
-    success_url = reverse_lazy("index")
+    template_name = 'todo_app/todolist_confirm_delete.html'
+    success_url = reverse_lazy('index')
+
+    def get_success_url(self):
+        return reverse_lazy('index')
 
 class ItemDelete(LoginRequiredMixin,DeleteView):
     model = ToDoItem
@@ -125,3 +127,4 @@ class ItemDelete(LoginRequiredMixin,DeleteView):
         context = super().get_context_data(**kwargs)
         context["todo_list"] = self.object.todo_list
         return context
+    
